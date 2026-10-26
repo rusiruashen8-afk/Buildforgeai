@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildForge AI - Generate Full-Stack Web Apps Instantly</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-code text-cyan-400 text-2xl"></i>
+            <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">BuildForge AI</span>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <!-- User Profile (Hidden by default until logged in) -->
+            <div id="userProfile" class="hidden items-center space-x-3 bg-slate-800/60 border border-slate-700 px-3 py-1.5 rounded-full">
+                <div id="userAvatar" class="w-7 h-7 rounded-full bg-cyan-500 text-slate-950 font-bold flex items-center justify-center text-xs">U</div>
+                <span id="userName" class="text-xs font-medium text-slate-200"></span>
+                <button onclick="signOut()" class="text-xs text-red-400 hover:text-red-300 ml-2" title="Sign Out">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+
+            <!-- Simple Login Button -->
+            <button id="loginBtn" onclick="openLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium px-4 py-2 rounded-lg text-sm transition border border-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-user-circle text-cyan-400"></i>
+                <span>Sign In</span>
+            </button>
+            
+            <a href="#pricing" class="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold px-4 py-2 rounded-lg text-sm transition shadow-lg shadow-cyan-500/20 hidden sm:inline-block">Get Access</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="max-w-5xl mx-auto px-6 py-16 text-center">
+        <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-medium tracking-wide">
+            ⚡ Powered by Advanced LLM Engine
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
+            Build Full-Stack Apps with <span class="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">Simple Prompts</span>
+        </h1>
+        <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            Generate, preview, and deploy high-performance web applications instantly. No complex setup required.
+        </p>
+
+        <!-- App Generator Box -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl text-left max-w-3xl mx-auto mb-20">
+            <label for="promptInput" class="block text-sm font-medium text-slate-300 mb-2">Describe the web application you want to build:</label>
+            <textarea id="promptInput" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-slate-100 focus:outline-none focus:border-cyan-500 transition placeholder-slate-600" placeholder="e.g., Build a modern cryptocurrency tracker dashboard with real-time charts..."></textarea>
+            <div class="flex justify-between items-center mt-4">
+                <span class="text-xs text-slate-500">AI processes and compiles clean Tailwind code.</span>
+                <button onclick="generateApp()" id="generateBtn" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-cyan-500/20 flex items-center space-x-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Generate App</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-12">
+            <h2 class="text-3xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <p class="text-slate-400 mb-12">Choose the plan that fits your workflow. Direct secure transfer available.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <!-- Starter Plan -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 flex flex-col justify-between hover:border-cyan-500/50 transition">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Starter Pass</h3>
+                        <p class="text-slate-400 text-sm mb-6">Perfect for individual creators and small tests.</p>
+                        <div class="text-4xl font-extrabold mb-6">$100<span class="text-sm font-normal text-slate-400"> /lifetime</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Standard Generation Speed</li>
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Full Source Code Export</li>
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Direct HNB Transfer Support</li>
+                        </ul>
+                    </div>
+                    <button onclick="openHNBModal('Starter Pass', '$100')" class="w-full bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 font-semibold py-3 rounded-xl transition text-center">
+                        Buy Starter Pass
+                    </button>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="bg-slate-900 border-2 border-cyan-500 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl shadow-cyan-500/10">
+                    <div class="absolute -top-3 right-6 bg-cyan-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Pro Pass</h3>
+                        <p class="text-slate-400 text-sm mb-6">For professional developers building multiple apps.</p>
+                        <div class="text-4xl font-extrabold mb-6">$200<span class="text-sm font-normal text-slate-400"> /lifetime</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> High-Speed Priority Gen</li>
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Advanced UI Components</li>
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Direct HNB Transfer Support</li>
+                        </ul>
+                    </div>
+                    <button onclick="openHNBModal('Pro Pass', '$200')" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold py-3 rounded-xl transition text-center shadow-lg shadow-cyan-500/20">
+                        Buy Pro Pass
+                    </button>
+                </div>
+
+                <!-- Agency Plan -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 flex flex-col justify-between hover:border-cyan-500/50 transition">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Agency Unlimited</h3>
+                        <p class="text-slate-400 text-sm mb-6">Full unthrottled access for growing teams.</p>
+                        <div class="text-4xl font-extrabold mb-6">$350<span class="text-sm font-normal text-slate-400"> /lifetime</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Unlimited Generations</li>
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Priority Support Channel</li>
+                            <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Direct HNB Transfer Support</li>
+                        </ul>
+                    </div>
+                    <button onclick="openHNBModal('Agency Unlimited', '$350')" class="w-full bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 font-semibold py-3 rounded-xl transition text-center">
+                        Buy Agency Pass
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-sm w-full p-6 relative shadow-2xl">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-cyan-500/15 text-cyan-400 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h3 class="text-xl font-bold">Sign In to BuildForge</h3>
+                <p class="text-slate-400 text-sm mt-1">Enter your name to start building apps instantly.</p>
+            </div>
+            
+            <input type="text" id="loginNameInput" placeholder="Your Name (e.g. John)" class="w-full bg-slate-955 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 mb-4 text-sm bg-slate-950">
+            <button onclick="submitLogin()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl transition">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <!-- HNB Payment Popup Modal -->
+    <div id="hnbModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button onclick="closeHNBModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-cyan-500/15 text-cyan-400 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <h3 class="text-xl font-bold" id="modalPlanTitle">Complete Your Payment</h3>
+                <p class="text-slate-400 text-sm mt-1">Transfer via <span class="text-cyan-400 font-semibold">Remitly / Wise / Bank Wire</span> to the HNB account below:</p>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-sm mb-6">
+                <div class="flex justify-between border-b border-slate-900 pb-2">
+                    <span class="text-slate-500">Bank Name:</span>
+                    <span class="font-medium text-slate-200">Hatton National Bank (HNB)</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-900 pb-2">
+                    <span class="text-slate-500">Account Name:</span>
+                    <span class="font-medium text-cyan-400">DULANJANA WHK</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-900 pb-2">
+                    <span class="text-slate-500">Account Number:</span>
+                    <span class="font-mono font-bold text-slate-100 bg-slate-900 px-2 py-0.5 rounded">079020213534</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">SWIFT Code:</span>
+                    <span class="font-mono font-bold text-cyan-400 bg-slate-900 px-2 py-0.5 rounded">HBLKLVX</span>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-400 text-center mb-6">
+                After making the transfer using Remitly or Wise, send your receipt screenshot to our verification line to get instant access.
+            </p>
+
+            <button onclick="closeHNBModal()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl transition">
+                Got It, Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        &copy; 2026 BuildForge AI. All rights reserved.
+    </footer>
+
+    <!-- Frontend Script -->
+    <script>
+        // Login Modal Functions
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('flex');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('flex');
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function submitLogin() {
+            const name = document.getElementById('loginNameInput').value.trim();
+            if (!name) {
+                alert('Please enter your name.');
+                return;
+            }
+            localStorage.setItem('user_name', name);
+            closeLoginModal();
+            updateUserUI();
+        }
+
+        function updateUserUI() {
+            const name = localStorage.getItem('user_name');
+            if (name) {
+                document.getElementById('userName').innerText = name;
+                document.getElementById('userAvatar').innerText = name.charAt(0).toUpperCase();
+                document.getElementById('userProfile').classList.remove('hidden');
+                document.getElementById('userProfile').classList.add('flex');
+                document.getElementById('loginBtn').style.display = 'none';
+            }
+        }
+
+        function signOut() {
+            localStorage.removeItem('user_name');
+            document.getElementById('userProfile').classList.remove('flex');
+            document.getElementById('userProfile').classList.add('hidden');
+            document.getElementById('loginBtn').style.display = 'flex';
+        }
+
+        document.addEventListener('DOMContentLoaded', updateUserUI);
+
+        // HNB Modal Functions
+        function openHNBModal(planName, planPrice) {
+            document.getElementById('modalPlanTitle').innerText = `Buy ${planName} (${planPrice})`;
+            document.getElementById('hnbModal').classList.remove('hidden');
+            document.getElementById('hnbModal').classList.add('flex');
+        }
+
+        function closeHNBModal() {
+            document.getElementById('hnbModal').classList.remove('flex');
+            document.getElementById('hnbModal').classList.add('hidden');
+        }
+
+        // AI App Generation Function
+        async function generateApp() {
+            const prompt = document.getElementById('promptInput').value.trim();
+            const btn = document.getElementById('generateBtn');
+
+            if (!prompt) {
+                alert('Please describe an application to generate.');
+                return;
+            }
+
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Generating...</span>`;
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+
+                const data = await response.json();
+                if (response.ok && data.code) {
+                    const newWindow = window.open();
+                    newWindow.document.write(data.code);
+                    newWindow.document.close();
+                } else {
+                    alert(data.error || 'Failed to generate application.');
+                }
+            } catch (err) {
+                alert('An error occurred. Please try again.');
+            } finally {
+                btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i><span>Generate App</span>`;
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
